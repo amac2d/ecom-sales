@@ -1,5 +1,4 @@
-.idea/
-.vscode/
-.DS_Store
 node_modules/
-server/public/api/db_connection.php
+mysql_credentials.js
+main.js
+main.js.map

@@ -42,6 +42,26 @@ app.get('/products', (req, res, next) => {
   });
 });
 
+app.get('/product', (req, res, next) => {
+  const id = parseInt(req.query.id);
+  console.log('what is req in node:', id);
+
+  let query = 'SELECT * FROM ?? WHERE ?? = ?';
+  let inserts = ['products', 'id', id];
+
+  let sql = mysql.format(query, inserts);
+
+  connection.query(sql, (err, results, fields) => {
+      if (err) return next(err);
+
+      const output = {
+          success: true,
+          data: results
+      };
+      res.json(output);
+  });
+});
+
 app.get('/cartItems', (req, res, next) => {
   let query = 'SELECT * FROM ??';
   let inserts = ['cartItems'];

@@ -23,10 +23,11 @@ export default class App extends React.Component {
     this.getCartItems();
   }
   getProducts() {
-    fetch('/api/products.php')
+    fetch('http://localhost:3001/products')
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
-        this.setState({ products: successObj });
+        this.setState({ products: successObj.data });
+        // console.log('what is the successObj:', successObj);
       });
   }
   setView(name, params) {
@@ -38,14 +39,14 @@ export default class App extends React.Component {
     });
   }
   getCartItems() {
-    fetch('/api/cart.php')
+    fetch('http://localhost:3001/cartItems')
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
         this.setState({ cart: successObj });
       });
   }
   addToCart(product) {
-    fetch('/api/cart.php', {
+    fetch('http://localhost:3001/cartItems', {
       method: 'POST',
       body: JSON.stringify(product),
       headers: {

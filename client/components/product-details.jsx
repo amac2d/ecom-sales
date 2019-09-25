@@ -10,10 +10,11 @@ class ProductDetails extends React.Component {
     this.addToCart = this.addToCart.bind(this);
   }
   componentDidMount() {
-    fetch('api/products.php?id=' + this.props.params.id)
+    console.log('what is this.state.product:', this.state.product);
+    fetch('http://localhost:3001/product?id=' + this.props.params.id)
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
-        this.setState({ product: successObj });
+        this.setState({ product: successObj.data[0] });
         // console.log('successObj/this.state.product:', this.props.params.id);
       });
   }
@@ -30,6 +31,7 @@ class ProductDetails extends React.Component {
   }
   render() {
     if (this.state.product) {
+      console.log('hello from the render', this.state.product);
       const product = this.state.product;
 
       return (

@@ -63,8 +63,9 @@ app.get('/product', (req, res, next) => {
 });
 
 app.get('/cartItems', (req, res, next) => {
-  let query = 'SELECT * FROM ??';
-  let inserts = ['cartItems'];
+  let query = 'SELECT ??, ??, ??, ??, ??, ?? FROM ?? JOIN ?? WHERE ?? = ??';
+  let inserts = ['cartItems.id', 'count', 'products.price', 'shortDescription', 'name', 
+                 'image', 'cartItems', 'products', 'productID', 'products.id'];
   let sql = mysql.format(query, inserts);
 
   connection.query(sql, (err, results, fields) => {
@@ -77,7 +78,6 @@ app.get('/cartItems', (req, res, next) => {
     res.json(output);
   });
 });
-
 
 
 // Error Handling Middleware

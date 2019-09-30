@@ -46,6 +46,7 @@ export default class App extends React.Component {
       });
   }
   addToCart(product) {
+    console.log('what is in addToCart product:', product);
     fetch('http://localhost:3001/cartItems', {
       method: 'POST',
       body: JSON.stringify(product),
@@ -55,7 +56,7 @@ export default class App extends React.Component {
     })
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
-        this.setState({ cart: [...this.state.cart, successObj] });
+        this.setState({ cart: [...this.state.cart, successObj.data] });
       })
       .catch(error => console.error('Error:', error));
   }

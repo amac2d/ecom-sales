@@ -42,7 +42,7 @@ export default class App extends React.Component {
     fetch('http://localhost:3001/cartItems')
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
-        this.setState({ cart: successObj });
+        this.setState({ cart: successObj.data });
       });
   }
   addToCart(product) {

@@ -99,6 +99,23 @@ app.post('/cartItems', (req, res, next) => {
   });
 });
 
+app.delete('/cartItems', (req, res, next) => {
+  const id = parseInt(req.query.id);
+  let query = 'DELETE FROM ?? WHERE ?? = ?';
+  let inserts = ['cartItems', 'id', id];
+  let sql = mysql.format(query, inserts);
+
+  connection.query(sql, (err, results, fields) => {
+    if (err) return next(err);
+
+    const output = {
+      success: true,
+      data: results
+    }
+    res.json(output);
+  });
+});
+
 
 // Error Handling Middleware
 app.use(function(err, req, res, next){

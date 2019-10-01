@@ -79,6 +79,26 @@ app.get('/cartItems', (req, res, next) => {
   });
 });
 
+app.post('/cartItems', (req, res, next) => {
+  let { id, price } = req.body;
+  // let query = 'SELECT ??, ??, ??, ??, ??, ?? FROM ?? JOIN ?? WHERE ?? = ??';
+  // let inserts = ['cartItems.id', 'count', 'products.price', 'shortDescription', 'name', 
+  //                'image', 'cartItems', 'products', 'productID', 'products.id'];
+  // let sql = mysql.format(query, inserts);
+  let sql = `INSERT INTO cartItems (id, productID, count, price, added, updated, cartID) 
+             VALUES (NULL, ${id}, 1, ${price}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1)`;
+
+  connection.query(sql, (err, results, fields) => {
+    if (err) return next(err);
+
+    const output = {
+      success: true,
+      data: results
+    }
+    res.json(output);
+  });
+});
+
 
 // Error Handling Middleware
 app.use(function(err, req, res, next){

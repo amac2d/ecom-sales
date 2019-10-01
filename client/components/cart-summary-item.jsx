@@ -1,6 +1,14 @@
 import React from 'react';
 
 class CartSummaryItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.removeFromCart = this.removeFromCart.bind(this);
+  }
+  removeFromCart() {
+    const product = this.props.element;
+    this.props.removeFromCart(product);
+  }
   render() {
     const product = this.props.element;
     return (
@@ -13,6 +21,7 @@ class CartSummaryItem extends React.Component {
             </p>
             <p>${(product.price / 100).toFixed(2)}</p>
             <p>{product.shortDescription}</p>
+            <button onClick={this.removeFromCart}>Remove from Cart</button>
           </div>
         </div>
       </div>

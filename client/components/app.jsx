@@ -18,6 +18,7 @@ export default class App extends React.Component {
     };
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.removeFromCart = this.removeFromCart.bind(this);
   }
   componentDidMount() {
     this.getProducts();
@@ -61,6 +62,16 @@ export default class App extends React.Component {
       })
       .catch(error => console.error('Error:', error));
   }
+  removeFromCart(product) {
+    fetch(`http://localhost:3001/cartItems?id=${product.id}`, {
+      method: 'DELETE'
+    })
+      .then(promiseObj => promiseObj.json())
+      .then(successObj => {
+        this.setState({ cart: this.state.cart.filter(element => element.id !== product.id) });
+      })
+      .catch(error => console.error('Error:', error));
+  }
   placeOrder(orderObj) {
     fetch('/api/orders.php', {
       method: 'POST',
@@ -100,7 +111,7 @@ export default class App extends React.Component {
       return (
         <div>
           <Header text='Wicked Sales' cartItemCount={this.state.cart.length} click={this.setView} />
-          <CartSummary cartItems={this.state.cart} click={this.setView} />
+          <CartSummary cartItems={this.state.cart} click={this.setView} removeFromCart={this.removeFromCart}/>
         </div>
       );
     } else if (this.state.view.name === 'checkout') {

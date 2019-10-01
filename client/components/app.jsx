@@ -55,7 +55,8 @@ export default class App extends React.Component {
     })
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
-        this.setState({ cart: [...this.state.cart, successObj] });
+        product.id = successObj.data.insertId;
+        this.setState({ cart: [...this.state.cart, product] });
       })
       .catch(error => console.error('Error:', error));
   }

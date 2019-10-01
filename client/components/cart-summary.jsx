@@ -5,6 +5,7 @@ class CartSummary extends React.Component {
   constructor(props) {
     super(props);
     this.sendBackToCatalog = this.sendBackToCatalog.bind(this);
+    this.showCheckout = this.showCheckout.bind(this);
   }
   sendBackToCatalog() {
     const setViewToCatalogObj = {
@@ -12,6 +13,13 @@ class CartSummary extends React.Component {
       params: {}
     };
     this.props.click(setViewToCatalogObj.name, setViewToCatalogObj.params);
+  }
+  showCheckout() {
+    const setViewToCheckout = {
+      name: 'checkout',
+      params: {}
+    };
+    this.props.click(setViewToCheckout.name, setViewToCheckout.params);
   }
   render() {
     if (this.props.cartItems.length === 0) {
@@ -52,6 +60,7 @@ class CartSummary extends React.Component {
               {this.props.cartItems.map(element => <CartSummaryItem key={element.id} element={element} />)}
             </div>
             <div>Item Total ${(priceTotal / 100).toFixed(2)}</div>
+            <button onClick={this.showCheckout}>Checkout</button>
           </div>
         </div>
       );

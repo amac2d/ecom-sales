@@ -67,8 +67,15 @@ export default class App extends React.Component {
       .catch(error => console.error('Error:', error));
   }
   removeFromCart(product) {
-    fetch(`http://localhost:3001/cartItems?cartItemID=${product.cartItemID}`, {
-      method: 'DELETE'
+    // fetch(`http://localhost:3001/cartItems?cartItemID=${product.cartItemID}`, {
+    fetch(`http://localhost:3001/cartItems`, {
+      method: 'DELETE',
+      body: JSON.stringify({
+        cartItemID: product.cartItemID
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
       .then(promiseObj => promiseObj.json())
       .then(successObj => {

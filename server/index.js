@@ -100,7 +100,7 @@ app.post('/cartItems', (req, res, next) => {
 });
 
 app.delete('/cartItems', (req, res, next) => {
-  const cartItemID = parseInt(req.query.cartItemID);
+  const cartItemID = parseInt(req.body.cartItemID);
   let query = 'DELETE FROM ?? WHERE ?? = ?';
   let inserts = ['cartItems', 'id', cartItemID];
   let sql = mysql.format(query, inserts);

@@ -31,7 +31,7 @@ class ProductDetails extends React.Component {
   }
   render() {
     if (this.state.product) {
-      console.log('hello from the render', this.state.product);
+      // console.log('hello from the render', this.state.product);
       const product = this.state.product;
 
       return (

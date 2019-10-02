@@ -9,6 +9,11 @@ class CartSummaryItem extends React.Component {
     const product = this.props.element;
     this.props.removeFromCart(product);
   }
+  handleQuantityInput(event) {
+    let quantity = this.state.quantity;
+    quantity = event.target.value;
+    this.setState({ quantity });
+  }
   render() {
     const product = this.props.element;
     return (
@@ -21,6 +26,7 @@ class CartSummaryItem extends React.Component {
             </p>
             <p>${(product.price / 100).toFixed(2)}</p>
             <p>{product.shortDescription}</p>
+            <input className='text-center' onChange={this.handleQuantityInput} style={{ 'width': '20%' }} type="number" name='quantity' min='0' defaultValue={this.state.quantity} placeholder='Qty' />
             <button onClick={this.removeFromCart}>Remove from Cart</button>
           </div>
         </div>

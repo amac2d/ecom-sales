@@ -57,7 +57,7 @@ class CartSummary extends React.Component {
               <h3>My Cart</h3>
             </div>
             <div>
-              {this.props.cartItems.map(element => <CartSummaryItem key={element.id} element={element} removeFromCart={this.props.removeFromCart}/>)}
+              {this.props.cartItems.map(element => <CartSummaryItem key={element.cartItemID} element={element} removeFromCart={this.props.removeFromCart}/>)}
             </div>
             <div>Item Total ${(priceTotal / 100).toFixed(2)}</div>
             <button onClick={this.showCheckout}>Checkout</button>

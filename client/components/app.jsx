@@ -45,9 +45,11 @@ export default class App extends React.Component {
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
         this.setState({ cart: successObj.data });
+        console.log('what is in getCartItems:', successObj);
       });
   }
   addToCart(product) {
+    // console.log('what is product in addToCart in app.jsx:', product);
     fetch('http://localhost:3001/cartItems', {
       method: 'POST',
       body: JSON.stringify(product),
@@ -57,18 +59,20 @@ export default class App extends React.Component {
     })
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
-        product.id = successObj.data.insertId;
-        this.setState({ cart: [...this.state.cart, product] });
+        console.log('what is in successObj in addToCart:', successObj);
+        const newProduct = Object.assign({}, product);
+        newProduct.cartItemID = successObj.data.insertId;
+        this.setState({ cart: [...this.state.cart, newProduct] });
       })
       .catch(error => console.error('Error:', error));
   }
   removeFromCart(product) {
-    fetch(`http://localhost:3001/cartItems?id=${product.id}`, {
+    fetch(`http://localhost:3001/cartItems?cartItemID=${product.cartItemID}`, {
       method: 'DELETE'
     })
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
-        this.setState({ cart: this.state.cart.filter(element => element.id !== product.id) });
+        this.setState({ cart: this.state.cart.filter(element => element.cartItemID !== product.cartItemID) });
       })
       .catch(error => console.error('Error:', error));
   }
@@ -111,7 +115,7 @@ export default class App extends React.Component {
       return (
         <div>
           <Header text='Wicked Sales' cartItemCount={this.state.cart.length} click={this.setView} />
-          <CartSummary cartItems={this.state.cart} click={this.setView} removeFromCart={this.removeFromCart}/>
+          <CartSummary cartItems={this.state.cart} click={this.setView} removeFromCart={this.removeFromCart} />
         </div>
       );
     } else if (this.state.view.name === 'checkout') {

@@ -63,8 +63,8 @@ app.get('/product', (req, res, next) => {
 });
 
 app.get('/cartItems', (req, res, next) => {
-  let query = 'SELECT ??, ??, ??, ??, ??, ?? FROM ?? JOIN ?? WHERE ?? = ??';
-  let inserts = ['cartItems.id', 'count', 'products.price', 'shortDescription', 'name', 
+  let query = 'SELECT ?? AS ??, ??,??, ??, ??, ??, ?? FROM ?? JOIN ?? WHERE ?? = ??';
+  let inserts = ['cartItems.id', 'cartItemID', 'productID', 'count', 'products.price', 'shortDescription', 'name', 
                  'image', 'cartItems', 'products', 'productID', 'products.id'];
   let sql = mysql.format(query, inserts);
 
@@ -100,9 +100,9 @@ app.post('/cartItems', (req, res, next) => {
 });
 
 app.delete('/cartItems', (req, res, next) => {
-  const id = parseInt(req.query.id);
+  const cartItemID = parseInt(req.query.cartItemID);
   let query = 'DELETE FROM ?? WHERE ?? = ?';
-  let inserts = ['cartItems', 'id', id];
+  let inserts = ['cartItems', 'id', cartItemID];
   let sql = mysql.format(query, inserts);
 
   connection.query(sql, (err, results, fields) => {

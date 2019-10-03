@@ -20,6 +20,7 @@ export default class App extends React.Component {
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
+    this.updateCartQuantityState = this.updateCartQuantityState.bind(this);
   }
   componentDidMount() {
     this.getProducts();
@@ -154,7 +155,7 @@ export default class App extends React.Component {
       return (
         <div>
           <Header text='Wicked Sales' cartItemCount={this.state.cartQuantity} click={this.setView} />
-          <CartSummary cartItems={this.state.cart} click={this.setView} removeFromCart={this.removeFromCart} />
+          <CartSummary cartItems={this.state.cart} click={this.setView} removeFromCart={this.removeFromCart} updateCartQuantityState={this.updateCartQuantityState} />
         </div>
       );
     } else if (this.state.view.name === 'checkout') {

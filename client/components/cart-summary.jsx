@@ -41,10 +41,10 @@ class CartSummary extends React.Component {
         </div>
       );
     } else {
-      const cartItemPrice = this.props.cartItems;
+      const cartItems = this.props.cartItems;
       let priceTotal = 0;
-      for (let indexPrice = 0; indexPrice < cartItemPrice.length; indexPrice++) {
-        priceTotal += cartItemPrice[indexPrice].price;
+      for (let indexPrice = 0; indexPrice < cartItems.length; indexPrice++) {
+        priceTotal += cartItems[indexPrice].price * cartItems[indexPrice].count;
       }
       return (
         <div className='cartSummaryContainer main'>

@@ -29,7 +29,7 @@ class ProductDetails extends React.Component {
   }
   addToCart() {
     const product = this.state.product;
-    product.quantity = this.state.quantity;
+    product.count = this.state.quantity;
     this.props.addToCart(product);
   }
   handleQuantityInput(event) {

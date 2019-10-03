@@ -3,6 +3,9 @@ import React from 'react';
 class CartSummaryItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      quantity: null
+    },
     this.removeFromCart = this.removeFromCart.bind(this);
   }
   removeFromCart() {

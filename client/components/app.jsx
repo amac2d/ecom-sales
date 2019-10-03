@@ -59,8 +59,26 @@ export default class App extends React.Component {
   }
   addToCart(product) {
     // console.log('what is product in addToCart in app.jsx:', product);
-    if (this.state.cart.find(element => element.productID === product.id)) {
+    if (this.state.cart.find(item => item.productID === product.id)) {
       console.log('yes update should work now!!!!');
+      const cartItem = this.state.cart.filter(item => item.productID === product.id);
+      cartItem[0].count = parseInt(product.count) + parseInt(cartItem[0].count);
+      fetch('http://localhost:3001/cartItems', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          cartItemID: cartItem[0].cartItemID,
+          count: cartItem[0].count
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(promiseObj => promiseObj.json())
+        .then(successObj => {
+          console.log('what is in successObj in addToCart PATCH:', successObj);
+          this.updateCartQuantityState();
+        })
+        .catch(error => console.error('Error:', error));
     } else {
       fetch('http://localhost:3001/cartItems', {
         method: 'POST',

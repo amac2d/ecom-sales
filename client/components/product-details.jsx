@@ -4,10 +4,12 @@ class ProductDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: null
+      product: null,
+      quantity: 1
     };
     this.sendBackToCatalog = this.sendBackToCatalog.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.handleQuantityInput = this.handleQuantityInput.bind(this);
   }
   componentDidMount() {
     console.log('what is this.state.product:', this.state.product);
@@ -27,7 +29,13 @@ class ProductDetails extends React.Component {
   }
   addToCart() {
     const product = this.state.product;
+    product.count = this.state.quantity;
     this.props.addToCart(product);
+  }
+  handleQuantityInput(event) {
+    let quantity = this.state.quantity;
+    quantity = event.target.value;
+    this.setState({ quantity });
   }
   render() {
     if (this.state.product) {
@@ -50,6 +58,7 @@ class ProductDetails extends React.Component {
               </p>
               <p>${(product.price / 100).toFixed(2)}</p>
               <p>{product.shortDescription}</p>
+              <input className='text-center' onChange={this.handleQuantityInput} style={{'width': '20%'}} type="number" name='quantity' min='0' defaultValue={this.state.quantity} placeholder='Qty'/>
               <button onClick={this.addToCart}>Add to Cart</button>
 
             </div>

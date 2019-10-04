@@ -14,11 +14,13 @@ export default class App extends React.Component {
         name: 'catalog',
         params: {}
       },
-      cart: []
+      cart: [],
+      cartQuantity: 0
     };
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
+    this.updateCartQuantityState = this.updateCartQuantityState.bind(this);
   }
   componentDidMount() {
     this.getProducts();
@@ -44,27 +46,58 @@ export default class App extends React.Component {
     fetch('http://localhost:3001/cartItems')
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
-        this.setState({ cart: successObj.data });
+        this.setState({ cart: successObj.data }, this.updateCartQuantityState);
         console.log('what is in getCartItems:', successObj);
       });
   }
+  updateCartQuantityState() {
+    let cartQuantity = 0;
+    const cartItemsArray = this.state.cart;
+    for (let index = 0; index < cartItemsArray.length; index++) {
+      cartQuantity += parseInt(cartItemsArray[index].count);
+    }
+    this.setState({ cartQuantity });
+  }
   addToCart(product) {
     // console.log('what is product in addToCart in app.jsx:', product);
-    fetch('http://localhost:3001/cartItems', {
-      method: 'POST',
-      body: JSON.stringify(product),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(promiseObj => promiseObj.json())
-      .then(successObj => {
-        console.log('what is in successObj in addToCart:', successObj);
-        const newProduct = Object.assign({}, product);
-        newProduct.cartItemID = successObj.data.insertId;
-        this.setState({ cart: [...this.state.cart, newProduct] });
+    if (this.state.cart.find(item => item.productID === product.id)) {
+      console.log('yes update should work now!!!!');
+      const cartItem = this.state.cart.filter(item => item.productID === product.id);
+      cartItem[0].count = parseInt(product.count) + parseInt(cartItem[0].count);
+      fetch('http://localhost:3001/cartItems', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          cartItemID: cartItem[0].cartItemID,
+          count: cartItem[0].count
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
-      .catch(error => console.error('Error:', error));
+        .then(promiseObj => promiseObj.json())
+        .then(successObj => {
+          console.log('what is in successObj in addToCart PATCH:', successObj);
+          this.updateCartQuantityState();
+        })
+        .catch(error => console.error('Error:', error));
+    } else {
+      fetch('http://localhost:3001/cartItems', {
+        method: 'POST',
+        body: JSON.stringify(product),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(promiseObj => promiseObj.json())
+        .then(successObj => {
+          console.log('what is in successObj in addToCart:', successObj);
+          const newProduct = Object.assign({}, product);
+          newProduct.cartItemID = successObj.data.insertId;
+          newProduct.productID = product.id;
+          this.setState({ cart: [...this.state.cart, newProduct] }, this.updateCartQuantityState);
+        })
+        .catch(error => console.error('Error:', error));
+    }
   }
   removeFromCart(product) {
     // fetch(`http://localhost:3001/cartItems?cartItemID=${product.cartItemID}`, {
@@ -79,7 +112,7 @@ export default class App extends React.Component {
     })
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
-        this.setState({ cart: this.state.cart.filter(element => element.cartItemID !== product.cartItemID) });
+        this.setState({ cart: this.state.cart.filter(element => element.cartItemID !== product.cartItemID) }, this.updateCartQuantityState);
       })
       .catch(error => console.error('Error:', error));
   }
@@ -107,28 +140,28 @@ export default class App extends React.Component {
     if (this.state.view.name === 'catalog') {
       return (
         <div>
-          <Header text='Wicked Sales' cartItemCount={this.state.cart.length} click={this.setView} />
+          <Header text='Wicked Sales' cartItemCount={this.state.cartQuantity} click={this.setView} />
           <ProductList click={this.setView} products={this.state.products} />
         </div>
       );
     } else if (this.state.view.name === 'details') {
       return (
         <div>
-          <Header text='Wicked Sales' cartItemCount={this.state.cart.length} click={this.setView} />
+          <Header text='Wicked Sales' cartItemCount={this.state.cartQuantity} click={this.setView} />
           <ProductDetails params={this.state.view.params} click={this.setView} addToCart={this.addToCart} />
         </div>
       );
     } else if (this.state.view.name === 'cart') {
       return (
         <div>
-          <Header text='Wicked Sales' cartItemCount={this.state.cart.length} click={this.setView} />
-          <CartSummary cartItems={this.state.cart} click={this.setView} removeFromCart={this.removeFromCart} />
+          <Header text='Wicked Sales' cartItemCount={this.state.cartQuantity} click={this.setView} />
+          <CartSummary cartItems={this.state.cart} click={this.setView} removeFromCart={this.removeFromCart} updateCartQuantityState={this.updateCartQuantityState} />
         </div>
       );
     } else if (this.state.view.name === 'checkout') {
       return (
         <div>
-          <Header text='Wicked Sales' cartItemCount={this.state.cart.length} click={this.setView} />
+          <Header text='Wicked Sales' cartItemCount={this.state.cartQuantity} click={this.setView} />
           <CheckoutForm onSubmit={this.placeOrder} click={this.setView} cartItems={this.state.cart} />
         </div>
       );

@@ -41,10 +41,10 @@ class CartSummary extends React.Component {
         </div>
       );
     } else {
-      const cartItemPrice = this.props.cartItems;
+      const cartItems = this.props.cartItems;
       let priceTotal = 0;
-      for (let indexPrice = 0; indexPrice < cartItemPrice.length; indexPrice++) {
-        priceTotal += cartItemPrice[indexPrice].price;
+      for (let indexPrice = 0; indexPrice < cartItems.length; indexPrice++) {
+        priceTotal += cartItems[indexPrice].price * cartItems[indexPrice].count;
       }
       return (
         <div className='cartSummaryContainer main'>
@@ -57,7 +57,7 @@ class CartSummary extends React.Component {
               <h3>My Cart</h3>
             </div>
             <div>
-              {this.props.cartItems.map(element => <CartSummaryItem key={element.cartItemID} element={element} removeFromCart={this.props.removeFromCart}/>)}
+              {this.props.cartItems.map(element => <CartSummaryItem key={element.cartItemID} element={element} removeFromCart={this.props.removeFromCart} updateCartQuantityState={this.props.updateCartQuantityState} />)}
             </div>
             <div>Item Total ${(priceTotal / 100).toFixed(2)}</div>
             <button onClick={this.showCheckout}>Checkout</button>

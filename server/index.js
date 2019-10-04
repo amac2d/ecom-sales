@@ -99,6 +99,25 @@ app.post('/cartItems', (req, res, next) => {
   });
 });
 
+app.patch('/cartItems', (req, res, next) => {
+  let { cartItemID, count } = req.body;
+  // let query = 'SELECT ??, ??, ??, ??, ??, ?? FROM ?? JOIN ?? WHERE ?? = ??';
+  // let inserts = ['cartItems.id', 'count', 'products.price', 'shortDescription', 'name', 
+  //                'image', 'cartItems', 'products', 'productID', 'products.id'];
+  // let sql = mysql.format(query, inserts);
+  let sql = `UPDATE cartItems SET count = ${count}, updated = CURRENT_TIMESTAMP WHERE cartItems.id = ${cartItemID}`;
+
+  connection.query(sql, (err, results, fields) => {
+    if (err) return next(err);
+
+    const output = {
+      success: true,
+      data: results
+    }
+    res.json(output);
+  });
+});
+
 app.delete('/cartItems', (req, res, next) => {
   const cartItemID = parseInt(req.body.cartItemID);
   let query = 'DELETE FROM ?? WHERE ?? = ?';

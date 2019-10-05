@@ -6,7 +6,7 @@ class CartSummaryItem extends React.Component {
     this.state = {
       quantity: this.props.element.count
     },
-    this.removeFromCart = this.removeFromCart.bind(this);
+      this.removeFromCart = this.removeFromCart.bind(this);
     this.updateFromCart = this.updateFromCart.bind(this);
     this.handleQuantityInput = this.handleQuantityInput.bind(this);
   }
@@ -17,31 +17,36 @@ class CartSummaryItem extends React.Component {
   updateFromCart() {
     console.log('hello from updateFromCart:', this.state.quantity);
     console.log('yes update should work now from updateFromCart!!!!');
-    const product = this.props.element;
-    const newCount = this.state.quantity;
-    fetch('http://localhost:3001/cartItems', {
-      method: 'PATCH',
-      body: JSON.stringify({
-        cartItemID: product.cartItemID,
-        count: newCount
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(promiseObj => promiseObj.json())
-      .then(successObj => {
-        console.log('what is in successObj in updateFromCart PATCH:', successObj);
-        console.log('what is product:', product);
-        product.count = parseInt(newCount);
-        console.log('what is product after new count:', product);
-        this.props.updateCartQuantityState();
+    const quantity = this.state.quantity;
+    if (quantity >= 0) {
+      const product = this.props.element;
+      const newCount = quantity;
+      fetch('http://localhost:3001/cartItems', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          cartItemID: product.cartItemID,
+          count: newCount
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
-      .catch(error => console.error('Error:', error));
+        .then(promiseObj => promiseObj.json())
+        .then(successObj => {
+          console.log('what is in successObj in updateFromCart PATCH:', successObj);
+          console.log('what is product:', product);
+          product.count = parseInt(newCount);
+          console.log('what is product after new count:', product);
+          this.props.updateCartQuantityState();
+        })
+        .catch(error => console.error('Error:', error));
+    } else {
+      this.removeFromCart();
+    }
   }
   handleQuantityInput(event) {
     let quantity = this.state.quantity;
-    quantity = event.target.value;
+    quantity = parseInt(event.target.value);
     this.setState({ quantity });
   }
   render() {

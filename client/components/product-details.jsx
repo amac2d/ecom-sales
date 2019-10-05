@@ -28,13 +28,17 @@ class ProductDetails extends React.Component {
     this.props.click(setViewToCatalogObj.name, setViewToCatalogObj.params);
   }
   addToCart() {
-    const product = this.state.product;
-    product.count = this.state.quantity;
-    this.props.addToCart(product);
+    const quantity = this.state.quantity
+    console.log('what is tpyeof product_______', typeof quantity);
+    if (quantity > 0 && typeof quantity === 'number') {
+      const product = this.state.product;
+      product.count = quantity;
+      this.props.addToCart(product);
+    }
   }
   handleQuantityInput(event) {
     let quantity = this.state.quantity;
-    quantity = event.target.value;
+    quantity = parseInt(event.target.value);
     this.setState({ quantity });
   }
   render() {
@@ -58,7 +62,7 @@ class ProductDetails extends React.Component {
               </p>
               <p>${(product.price / 100).toFixed(2)}</p>
               <p>{product.shortDescription}</p>
-              <input className='text-center' onChange={this.handleQuantityInput} style={{'width': '20%'}} type="number" name='quantity' min='0' defaultValue={this.state.quantity} placeholder='Qty'/>
+              <input className='text-center' onChange={this.handleQuantityInput} style={{ 'width': '20%' }} type="number" name='quantity' min='0' defaultValue={this.state.quantity} placeholder='Qty' />
               <button onClick={this.addToCart}>Add to Cart</button>
 
             </div>

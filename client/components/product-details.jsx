@@ -12,12 +12,10 @@ class ProductDetails extends React.Component {
     this.handleQuantityInput = this.handleQuantityInput.bind(this);
   }
   componentDidMount() {
-    console.log('what is this.state.product:', this.state.product);
     fetch('/api/product?id=' + this.props.params.id)
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
         this.setState({ product: successObj.data[0] });
-        // console.log('successObj/this.state.product:', this.props.params.id);
       });
   }
   sendBackToCatalog() {
@@ -29,8 +27,7 @@ class ProductDetails extends React.Component {
   }
   addToCart() {
     const quantity = this.state.quantity
-    console.log('what is tpyeof product_______', typeof quantity);
-    if (quantity > 0 && typeof quantity === 'number') {
+    if (quantity > 0) {
       const product = this.state.product;
       product.count = quantity;
       this.props.addToCart(product);
@@ -43,7 +40,6 @@ class ProductDetails extends React.Component {
   }
   render() {
     if (this.state.product) {
-      // console.log('hello from the render', this.state.product);
       const product = this.state.product;
 
       return (

@@ -13,7 +13,7 @@ class ProductDetails extends React.Component {
   }
   componentDidMount() {
     console.log('what is this.state.product:', this.state.product);
-    fetch('http://localhost:3001/product?id=' + this.props.params.id)
+    fetch('/api/product?id=' + this.props.params.id)
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
         this.setState({ product: successObj.data[0] });

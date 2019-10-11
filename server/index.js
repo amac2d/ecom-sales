@@ -29,38 +29,8 @@ const sessionMiddleware = session({
 
 app.use(sessionMiddleware);
 app.use(cors());
-// app.use(express.urlencoded());
 app.use(express.static(pubDirectory));
 app.use(express.json());
-
-// Routes
-// app.get('/', (req, res) => {
-//   res.send('Luigi');
-// });
-
-// Tony's code to store session
-app.post('/api/checkCart', (req, res, next) => {
-  console.log('/checkCart endpoint called!!!');
-  console.log('/checkCart session.cartID', req.session.cartID);
-
-  if (!req.session.cartID) {
-    let sqlQuery = `INSERT INTO cart (id, created) VALUES (NULL, CURRENT_TIMESTAMP)`;
-    //create new cart
-    // const [result] =  
-    connection.query(sqlQuery, (err, results, fields) => {
-      req.session.cartID = results.insertId;
-      console.log('what is req.session.cartID::::', req.session.cartID);
-      console.log('what is result::::', results);
-      res.json({ data: req.session.cartID });
-    });
-  } else {
-    //find cart where id = req.sessionID
-    // req.session.cartID = 'hello there';
-    console.log('what is sessionID____', req.session);
-    res.json({ data: req.session.cartID });
-  }
-
-});
 
 app.get('/api/products', (req, res, next) => {
   let query = 'SELECT * FROM ??';
@@ -80,7 +50,6 @@ app.get('/api/products', (req, res, next) => {
 
 app.get('/api/product', (req, res, next) => {
   const id = parseInt(req.query.id);
-  console.log('what is req in node:', id);
 
   let query = 'SELECT * FROM ?? WHERE ?? = ?';
   let inserts = ['products', 'id', id];
@@ -99,7 +68,6 @@ app.get('/api/product', (req, res, next) => {
 });
 
 app.get('/api/cartItems', (req, res, next) => {
-  // const cartID = req.session.cartID;
   console.log('what is req.session in get/cartItems', req.session);
   if (req.session.cartID) {
 
@@ -128,14 +96,12 @@ app.get('/api/cartItems', (req, res, next) => {
 });
 
 app.post('/api/cartItems', (req, res, next) => {
-  // let cartID = req.session.cartID;
   console.log('/cartItems, whhat is in req.session.cartID', req.session.cartID);
-
   let { id, price } = req.body;
+
+  // create cartID if cartID is undefined
   if (!req.session.cartID) {
     let sqlQuery = `INSERT INTO cart (id, created) VALUES (NULL, CURRENT_TIMESTAMP)`;
-    //create new cart
-    // const [result] =  
     connection.query(sqlQuery, (err, results, fields) => {
       req.session.cartID = results.insertId;
       let sql = `INSERT INTO cartItems (id, productID, count, price, added, updated, cartID) 
@@ -154,13 +120,9 @@ app.post('/api/cartItems', (req, res, next) => {
 
 
   } else {
-
-    // let query = 'SELECT ??, ??, ??, ??, ??, ?? FROM ?? JOIN ?? WHERE ?? = ??';
-    // let inserts = ['cartItems.id', 'count', 'products.price', 'shortDescription', 'name', 
-    //                'image', 'cartItems', 'products', 'productID', 'products.id'];
-    // let sql = mysql.format(query, inserts);
     let sql = `INSERT INTO cartItems (id, productID, count, price, added, updated, cartID) 
-             VALUES (NULL, ${id}, 1, ${price}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ${req.session.cartID})`;
+               VALUES (NULL, ${id}, 1, ${price}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 
+               ${req.session.cartID})`;
 
     connection.query(sql, (err, results, fields) => {
       if (err) return next(err);
@@ -176,11 +138,8 @@ app.post('/api/cartItems', (req, res, next) => {
 
 app.patch('/api/cartItems', (req, res, next) => {
   let { cartItemID, count } = req.body;
-  // let query = 'SELECT ??, ??, ??, ??, ??, ?? FROM ?? JOIN ?? WHERE ?? = ??';
-  // let inserts = ['cartItems.id', 'count', 'products.price', 'shortDescription', 'name', 
-  //                'image', 'cartItems', 'products', 'productID', 'products.id'];
-  // let sql = mysql.format(query, inserts);
-  let sql = `UPDATE cartItems SET count = ${count}, updated = CURRENT_TIMESTAMP WHERE cartItems.id = ${cartItemID}`;
+  let sql = `UPDATE cartItems SET count = ${count}, updated = CURRENT_TIMESTAMP 
+             WHERE cartItems.id = ${cartItemID}`;
 
   connection.query(sql, (err, results, fields) => {
     if (err) return next(err);

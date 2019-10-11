@@ -18,10 +18,10 @@ class CartSummaryItem extends React.Component {
     console.log('hello from updateFromCart:', this.state.quantity);
     console.log('yes update should work now from updateFromCart!!!!');
     const quantity = this.state.quantity;
-    if (quantity >= 0) {
+    if (quantity > 0) {
       const product = this.props.element;
       const newCount = quantity;
-      fetch('http://localhost:3001/cartItems', {
+      fetch('/api/cartItems', {
         method: 'PATCH',
         body: JSON.stringify({
           cartItemID: product.cartItemID,

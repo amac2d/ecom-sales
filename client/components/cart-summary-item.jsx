@@ -15,8 +15,6 @@ class CartSummaryItem extends React.Component {
     this.props.removeFromCart(product);
   }
   updateFromCart() {
-    console.log('hello from updateFromCart:', this.state.quantity);
-    console.log('yes update should work now from updateFromCart!!!!');
     const quantity = this.state.quantity;
     if (quantity > 0) {
       const product = this.props.element;
@@ -33,10 +31,7 @@ class CartSummaryItem extends React.Component {
       })
         .then(promiseObj => promiseObj.json())
         .then(successObj => {
-          console.log('what is in successObj in updateFromCart PATCH:', successObj);
-          console.log('what is product:', product);
           product.count = parseInt(newCount);
-          console.log('what is product after new count:', product);
           this.props.updateCartQuantityState();
         })
         .catch(error => console.error('Error:', error));

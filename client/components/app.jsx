@@ -47,7 +47,6 @@ export default class App extends React.Component {
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
         this.setState({ cart: successObj.data }, this.updateCartQuantityState);
-        console.log('what is in getCartItems:', successObj);
       });
   }
   updateCartQuantityState() {
@@ -59,9 +58,7 @@ export default class App extends React.Component {
     this.setState({ cartQuantity });
   }
   addToCart(product) {
-    // console.log('what is product in addToCart in app.jsx:', product);
     if (this.state.cart.find(item => item.productID === product.id)) {
-      console.log('yes update should work now!!!!');
       const cartItem = this.state.cart.filter(item => item.productID === product.id);
       cartItem[0].count = parseInt(product.count) + parseInt(cartItem[0].count);
       fetch('/api/cartItems', {
@@ -76,7 +73,6 @@ export default class App extends React.Component {
       })
         .then(promiseObj => promiseObj.json())
         .then(successObj => {
-          console.log('what is in successObj in addToCart PATCH:', successObj);
           this.updateCartQuantityState();
         })
         .catch(error => console.error('Error:', error));
@@ -90,7 +86,6 @@ export default class App extends React.Component {
       })
         .then(promiseObj => promiseObj.json())
         .then(successObj => {
-          console.log('what is in successObj in addToCart:', successObj);
           const newProduct = Object.assign({}, product);
           newProduct.cartItemID = successObj.data.insertId;
           newProduct.productID = product.id;
@@ -100,7 +95,6 @@ export default class App extends React.Component {
     }
   }
   removeFromCart(product) {
-    // fetch(`/api/cartItems?cartItemID=${product.cartItemID}`, {
     fetch(`/api/cartItems`, {
       method: 'DELETE',
       body: JSON.stringify({

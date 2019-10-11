@@ -15,7 +15,8 @@ export default class App extends React.Component {
         params: {}
       },
       cart: [],
-      cartQuantity: 0
+      cartQuantity: 0,
+      cartID: null
     };
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
@@ -27,11 +28,10 @@ export default class App extends React.Component {
     this.getCartItems();
   }
   getProducts() {
-    fetch('http://localhost:3001/products')
+    fetch('/api/products')
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
         this.setState({ products: successObj.data });
-        // console.log('what is the successObj:', successObj);
       });
   }
   setView(name, params) {
@@ -43,7 +43,7 @@ export default class App extends React.Component {
     });
   }
   getCartItems() {
-    fetch('http://localhost:3001/cartItems')
+    fetch('/api/cartItems')
       .then(promiseObj => promiseObj.json())
       .then(successObj => {
         this.setState({ cart: successObj.data }, this.updateCartQuantityState);
@@ -64,7 +64,7 @@ export default class App extends React.Component {
       console.log('yes update should work now!!!!');
       const cartItem = this.state.cart.filter(item => item.productID === product.id);
       cartItem[0].count = parseInt(product.count) + parseInt(cartItem[0].count);
-      fetch('http://localhost:3001/cartItems', {
+      fetch('/api/cartItems', {
         method: 'PATCH',
         body: JSON.stringify({
           cartItemID: cartItem[0].cartItemID,
@@ -81,7 +81,7 @@ export default class App extends React.Component {
         })
         .catch(error => console.error('Error:', error));
     } else {
-      fetch('http://localhost:3001/cartItems', {
+      fetch('/api/cartItems', {
         method: 'POST',
         body: JSON.stringify(product),
         headers: {
@@ -100,8 +100,8 @@ export default class App extends React.Component {
     }
   }
   removeFromCart(product) {
-    // fetch(`http://localhost:3001/cartItems?cartItemID=${product.cartItemID}`, {
-    fetch(`http://localhost:3001/cartItems`, {
+    // fetch(`/api/cartItems?cartItemID=${product.cartItemID}`, {
+    fetch(`/api/cartItems`, {
       method: 'DELETE',
       body: JSON.stringify({
         cartItemID: product.cartItemID

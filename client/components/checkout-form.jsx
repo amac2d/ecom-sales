@@ -46,10 +46,10 @@ class CheckoutForm extends React.Component {
     this.props.click(setViewToCatalogObj.name, setViewToCatalogObj.params);
   }
   render() {
-    const cartItemPrice = this.props.cartItems;
+    const cartItems = this.props.cartItems;
     let priceTotal = 0;
-    for (let indexPrice = 0; indexPrice < cartItemPrice.length; indexPrice++) {
-      priceTotal += parseFloat(cartItemPrice[indexPrice].price);
+    for (let indexPrice = 0; indexPrice < cartItems.length; indexPrice++) {
+      priceTotal += cartItems[indexPrice].price * cartItems[indexPrice].count;
     }
     return (
       <div className='checkoutForm container main col-6'>

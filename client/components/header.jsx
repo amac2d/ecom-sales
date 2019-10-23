@@ -20,7 +20,7 @@ class Header extends React.Component {
         </div>
         <div className='col text-right'>
           <span className='' style={{ fontSize: '1.5rem' }}> {this.props.cartItemCount} Items</span>
-          <img className='' src="/images/shoppingCartIcon.png" alt="shopping cart for wicked sales" style={{ height: '2.25rem' }} onClick={this.showCartSummary} />
+          <img className='' src="../images/shoppingCartIcon.png" alt="Cart" style={{ height: '2.25rem' }} onClick={this.showCartSummary} />
         </div>
       </h1>
     );

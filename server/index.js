@@ -58,7 +58,7 @@ app.get('/api/product', (req, res, next) => {
 
   connection.query(sql, (err, results, fields) => {
     if (err) return next(err);
-
+    results[0].longDescription = JSON.parse(results[0].longDescription);
     const output = {
       success: true,
       data: results

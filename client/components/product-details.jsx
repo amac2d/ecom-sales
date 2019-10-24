@@ -49,10 +49,9 @@ class ProductDetails extends React.Component {
             <div onClick={this.sendBackToCatalog}>&#60; Back to catalog</div>
           </div>
 
-          <div className='row'>
-            <img src={product.image} alt="product image" className='img-fluid col-md-6' />
-            <div className='col-md-6 m-auto'>
-
+          <div className='row mb-4'>
+            <img src={product.image} alt="product image" className='img-thumbnail col-md-4' />
+            <div className='col-md-4'>
               <p className='productDetailsName'>
                 <strong>{product.name}</strong>
               </p>
@@ -60,12 +59,9 @@ class ProductDetails extends React.Component {
               <p>{product.shortDescription}</p>
               <input className='text-center' onChange={this.handleQuantityInput} style={{ 'width': '20%' }} type="number" name='quantity' min='0' defaultValue={this.state.quantity} placeholder='Qty' />
               <button onClick={this.addToCart}>Add to Cart</button>
-
             </div>
-
           </div>
-
-          <div className='row col mt-4'>{product.longDescription}</div>
+          <ul className='col-md-4'>{product.longDescription.map( text => <li>{text}</li>)}</ul>
 
         </div>
       );

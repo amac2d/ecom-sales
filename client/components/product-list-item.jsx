@@ -19,17 +19,10 @@ class ProductListItem extends React.Component {
   }
   render() {
     const img = this.props.element.image;
-    const imgStyle = {
-      backgroundImage: 'url(' + img + ')',
-      height: '300px',
-      backgroundSize: '100% 100%',
-      backgroundRepeat: 'no-repeat',
-      objectFit: 'contain'
-    };
     return (
       <div className='col-md-4'>
         <div className='productCard card mb-4 shadow-sm' onClick={this.sendViewStateObj}>
-          <div className='productImage card-img-top' style={imgStyle}></div>
+          <img src={img} alt="product image" className='img-fluid mb-4' />
           <div className='productCardBody card-body'>
             <p className='productName card-title'>
               <strong>{this.props.element.name}</strong>

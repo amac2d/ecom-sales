@@ -50,8 +50,8 @@ class ProductDetails extends React.Component {
           </div>
 
           <div className='row mb-4'>
-            <img src={product.image} alt="product image" className='img-thumbnail col-md-4' />
-            <div className='col-md-4'>
+            <img src={product.image} alt="product image" className='img-fluid col-md-6' />
+            <div className='col-md-6 p-5'>
               <p className='productDetailsName'>
                 <strong>{product.name}</strong>
               </p>
@@ -61,7 +61,7 @@ class ProductDetails extends React.Component {
               <button onClick={this.addToCart}>Add to Cart</button>
             </div>
           </div>
-          <ul className='col-md-4'>{product.longDescription.map( text => <li>{text}</li>)}</ul>
+          <ul className='col-md-6'>{product.longDescription.map( text => <li>{text}</li>)}</ul>
 
         </div>
       );

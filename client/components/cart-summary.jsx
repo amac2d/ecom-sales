@@ -48,7 +48,7 @@ class CartSummary extends React.Component {
       }
       return (
         <div className='cartSummaryContainer main'>
-          <div className='col mx-auto'>
+          <div className='col m-4'>
             <div className='row col mb-4'>
               <div onClick={this.sendBackToCatalog}>&#60; Back to catalog</div>
             </div>
@@ -59,8 +59,9 @@ class CartSummary extends React.Component {
             <div>
               {this.props.cartItems.map(element => <CartSummaryItem key={element.cartItemID} element={element} removeFromCart={this.props.removeFromCart} updateCartQuantityState={this.props.updateCartQuantityState} />)}
             </div>
-            <div>Item Total ${(priceTotal / 100).toFixed(2)}</div>
-            <button onClick={this.showCheckout}>Checkout</button>
+            <div>Item Total ${(priceTotal / 100).toFixed(2)}
+            </div>
+            <button onClick={this.showCheckout} className='btn btn-primary' >Checkout</button>
           </div>
         </div>
       );

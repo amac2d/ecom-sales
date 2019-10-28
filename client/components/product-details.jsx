@@ -50,18 +50,20 @@ class ProductDetails extends React.Component {
           </div>
 
           <div className='row mb-4'>
-            <img src={product.image} alt="product image" className='img-fluid col-md-6' />
+            <img src={product.image} alt={product.name} className='img-fluid col-md-6' />
             <div className='col-md-6 p-5'>
               <p className='productDetailsName'>
                 <strong>{product.name}</strong>
               </p>
               <p>${(product.price / 100).toFixed(2)}</p>
               <p>{product.shortDescription}</p>
-              <input className='text-center' onChange={this.handleQuantityInput} style={{ 'width': '20%' }} type="number" name='quantity' min='0' defaultValue={this.state.quantity} placeholder='Qty' />
-              <button onClick={this.addToCart}>Add to Cart</button>
+              <div className='form-row' >
+                <input className='text-center form-control' onChange={this.handleQuantityInput} style={{ 'width': '20%' }} type="number" name='quantity' min='0' defaultValue={this.state.quantity} placeholder='Qty' />
+                <button onClick={this.addToCart} className='btn btn-primary' >Add to Cart</button>
+              </div>
             </div>
           </div>
-          <ul className='col-md-6'>{product.longDescription.map( text => <li>{text}</li>)}</ul>
+          <ul className='col-md-6'>{product.longDescription.map(text => <li>{text}</li>)}</ul>
 
         </div>
       );

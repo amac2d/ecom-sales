@@ -22,7 +22,7 @@ class ProductListItem extends React.Component {
     return (
       <div className='col-md-3'>
         <div className='productCard card mb-4 shadow-sm' onClick={this.sendViewStateObj}>
-          <img src={img} alt="product image" className='img-fluid p-3' />
+          <img src={img} alt={this.props.element.name} className='img-fluid p-3' />
           <div className='productCardBody card-body'>
             <p className='productName card-title'>
               <strong>{this.props.element.name}</strong>

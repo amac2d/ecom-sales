@@ -49,8 +49,8 @@ class CartSummaryItem extends React.Component {
     return (
       <div className='main col m-4' style={{ 'maxWidth': '540px' }}>
         <div className='row'>
-          <img src={product.image} alt="product image" className='img-thumbnail col-4 col-sm-4 col-md-4 col-lg-4' />
-          <div className='col-8 col-sm-8 col-md-8 col-lg-8 m-auto'>
+          <img src={product.image} alt="product image" className='img-thumbnail col-8 col-sm-4 col-md-4 col-lg-4' />
+          <div className='col-10 col-sm-8 col-md-8 col-lg-8'>
             <p className='productDetailsName'>
               <strong>{product.name}</strong>
             </p>

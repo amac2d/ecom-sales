@@ -52,7 +52,7 @@ class CheckoutForm extends React.Component {
       priceTotal += cartItems[indexPrice].price * cartItems[indexPrice].count;
     }
     return (
-      <div className='checkoutForm container main col-9'>
+      <div className='checkoutForm container main col-9  col-md-6 col-lg-6'>
         <div>
           <div>
             <h3>Checkout</h3>
@@ -76,9 +76,13 @@ class CheckoutForm extends React.Component {
             <br />
             <textarea value={this.state.shippingAddress} onChange={this.handleShippingAddressInput} name="" id="" cols="30" rows="10" placeholder='Street Address, City, State, Zipcode' className='form-control'></textarea>
           </div>
-          <div className='mb-3' >
-            <span onClick={this.sendBackToCatalog} className='float-left' >&#60; Continue Shopping</span>
-            <button onClick={this.handlePlaceOrder} className='float-right btn btn-primary' >Place Order</button>
+          <div className='mb-3 form-row' >
+            <div className='col-6'>
+              <span onClick={this.sendBackToCatalog} className='float-left' >&#60; Continue Shopping</span>
+            </div>
+            <div className='col-6'>
+              <button onClick={this.handlePlaceOrder} className='float-right btn btn-primary' >Place Order</button>
+            </div>
           </div>
         </div>
       </div>

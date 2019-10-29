@@ -52,7 +52,7 @@ class CheckoutForm extends React.Component {
       priceTotal += cartItems[indexPrice].price * cartItems[indexPrice].count;
     }
     return (
-      <div className='checkoutForm container main col-6'>
+      <div className='checkoutForm container main col-9'>
         <div>
           <div>
             <h3>Checkout</h3>
@@ -78,7 +78,7 @@ class CheckoutForm extends React.Component {
           </div>
           <div className='mb-3' >
             <span onClick={this.sendBackToCatalog} className='float-left' >&#60; Continue Shopping</span>
-            <button onClick={this.handlePlaceOrder} className='float-right' >Place Order</button>
+            <button onClick={this.handlePlaceOrder} className='float-right btn btn-primary' >Place Order</button>
           </div>
         </div>
       </div>

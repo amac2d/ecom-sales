@@ -41,7 +41,7 @@ class ProductDetails extends React.Component {
   render() {
     if (this.state.product) {
       const product = this.state.product;
-
+      const priceStr = this.state.product.price.toString();
       return (
         <div className='main col m-4'>
 
@@ -55,8 +55,14 @@ class ProductDetails extends React.Component {
               <p className='productDetailsName'>
                 <strong>{product.name}</strong>
               </p>
-              <p>${(product.price / 100).toFixed(2)}</p>
-              <p>{product.shortDescription}</p>
+              <p className='productDetailsPrice'>
+                <strong>
+                  ${priceStr.slice(0, -2)}
+                </strong>
+                <sup>
+                  .{priceStr.slice(-2)}
+                </sup>
+              </p>              <p>{product.shortDescription}</p>
               <div className='form-row' >
                 <input className='text-center form-control' onChange={this.handleQuantityInput} style={{ 'width': '20%' }} type="number" name='quantity' min='0' defaultValue={this.state.quantity} placeholder='Qty' />
                 <button onClick={this.addToCart} className='btn btn-primary' >Add to Cart</button>

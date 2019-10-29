@@ -19,6 +19,7 @@ class ProductListItem extends React.Component {
   }
   render() {
     const img = this.props.element.image;
+    const priceStr = this.props.element.price.toString();
     return (
       <div className='col-md-3'>
         <div className='productCard card mb-4 shadow-sm' onClick={this.sendViewStateObj}>
@@ -27,11 +28,18 @@ class ProductListItem extends React.Component {
             <p className='productName card-title'>
               <strong>{this.props.element.name}</strong>
             </p>
-            <p className='productPrice card-text'>
-              ${(this.props.element.price / 100).toFixed(2)}
+            <p className='productPrice card-text price'>
+              <strong>
+                ${priceStr.slice(0, -2)}
+              </strong>
+              <sup>
+                .{priceStr.slice(-2)}
+              </sup>
             </p>
             <p className='productDescription card-text'>
-              {this.props.element.shortDescription}
+              <i>
+                {this.props.element.shortDescription}
+              </i>
             </p>
           </div>
         </div>

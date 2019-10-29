@@ -46,16 +46,23 @@ class CartSummaryItem extends React.Component {
   }
   render() {
     const product = this.props.element;
+    const priceStr = product.price.toString();
     return (
       <div className='main col m-4' style={{ 'maxWidth': '540px' }}>
         <div className='row'>
-          <img src={product.image} alt="product image" className='img-thumbnail col-4 col-sm-4 col-md-4 col-lg-4' />
-          <div className='col-8 col-sm-8 col-md-8 col-lg-8 m-auto'>
-            <p className='productDetailsName'>
+          <img src={product.image} alt="product image" className='img-thumbnail col-8 col-sm-4 col-md-4 col-lg-4' />
+          <div className='col-10 col-sm-8 col-md-8 col-lg-8'>
+            <p className='cartSummaryName'>
               <strong>{product.name}</strong>
             </p>
-            <p>${(product.price / 100).toFixed(2)}</p>
-            <div className='form-row'>
+            <p className='cartSummaryItemPrice'>
+                <strong>
+                  ${priceStr.slice(0, -2)}
+                </strong>
+                <sup>
+                  .{priceStr.slice(-2)}
+                </sup>
+              </p>            <div className='form-row'>
               <input className='text-center form-control' onChange={this.handleQuantityInput} style={{ 'width': '20%' }} type="number" name='quantity' min='0' defaultValue={this.state.quantity} placeholder='Qty' />
               <button onClick={this.updateFromCart} className='btn btn-info' >Update</button>
               <button onClick={this.removeFromCart} className='btn btn-danger' >Remove all</button>

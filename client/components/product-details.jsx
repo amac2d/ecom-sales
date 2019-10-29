@@ -62,7 +62,8 @@ class ProductDetails extends React.Component {
                 <sup>
                   .{priceStr.slice(-2)}
                 </sup>
-              </p>              <p>{product.shortDescription}</p>
+              </p>
+              <p>{product.shortDescription}</p>
               <div className='form-row' >
                 <input className='text-center form-control' onChange={this.handleQuantityInput} style={{ 'width': '20%' }} type="number" name='quantity' min='0' defaultValue={this.state.quantity} placeholder='Qty' />
                 <button onClick={this.addToCart} className='btn btn-primary' >Add to Cart</button>

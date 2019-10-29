@@ -46,6 +46,7 @@ class CartSummaryItem extends React.Component {
   }
   render() {
     const product = this.props.element;
+    const priceStr = product.price.toString();
     return (
       <div className='main col m-4' style={{ 'maxWidth': '540px' }}>
         <div className='row'>
@@ -54,8 +55,14 @@ class CartSummaryItem extends React.Component {
             <p className='cartSummaryName'>
               <strong>{product.name}</strong>
             </p>
-            <p className='productPrice'>${(product.price / 100).toFixed(2)}</p>
-            <div className='form-row'>
+            <p className='cartSummaryItemPrice'>
+                <strong>
+                  ${priceStr.slice(0, -2)}
+                </strong>
+                <sup>
+                  .{priceStr.slice(-2)}
+                </sup>
+              </p>            <div className='form-row'>
               <input className='text-center form-control' onChange={this.handleQuantityInput} style={{ 'width': '20%' }} type="number" name='quantity' min='0' defaultValue={this.state.quantity} placeholder='Qty' />
               <button onClick={this.updateFromCart} className='btn btn-info' >Update</button>
               <button onClick={this.removeFromCart} className='btn btn-danger' >Remove all</button>

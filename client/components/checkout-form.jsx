@@ -67,12 +67,12 @@ class CheckoutForm extends React.Component {
           <div className='mb-3' >
             Name
             <br />
-            <input value={this.state.name} onChange={this.handleNameInput} type="text" placeholder='Name' className='form-control' />
+            <input value={this.state.name} onChange={this.handleNameInput} type="text" placeholder='Full Name' className='form-control' />
           </div>
           <div className='mb-3' >
             Credit Card
             <br />
-            <input value={this.state.creditCard} onChange={this.handleCreditCardInput} type="number" placeholder='Credit Card #' className='form-control' />
+            <input value={this.state.creditCard} onChange={this.handleCreditCardInput} type="number" placeholder='16 Digit Credit Card #' className='form-control' />
           </div>
           <div className='mb-3' >
             Shipping Address

@@ -67,8 +67,11 @@ class CheckoutForm extends React.Component {
     this.props.onSubmit(this.state);
     this.setState({
       name: '',
+      nameValidation: '',
       creditCard: '',
-      shippingAddress: ''
+      creditCardValidation: '',
+      shippingAddress: '',
+      shippingAddressValidation: ''
     });
   }
   sendBackToCatalog() {

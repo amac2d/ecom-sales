@@ -15,3 +15,9 @@
 .cartSummaryItemPrice {
   font-size: .8rem;
 }
+.redIcon {
+  color: red;
+}
+.greenIcon {
+  color: green;;
+}

@@ -5,8 +5,11 @@ class CheckoutForm extends React.Component {
     super(props);
     this.state = {
       name: '',
+      nameValidation: '',
       creditCard: '',
-      shippingAddress: ''
+      creditCardValidation: '',
+      shippingAddress: '',
+      shippingAddressValidation: ''
     };
     this.handleNameInput = this.handleNameInput.bind(this);
     this.handleCreditCardInput = this.handleCreditCardInput.bind(this);
@@ -17,25 +20,58 @@ class CheckoutForm extends React.Component {
   handleNameInput(event) {
     let name = this.state.name;
     name = event.target.value;
-    this.setState({ name });
+    if (name) {
+      this.setState({ 
+        name,
+        nameValidation: 'fas fa-check greenIcon'
+       });
+    } else {
+      this.setState({ 
+        name,
+        nameValidation: 'fas fa-times redIcon'
+      });
+    }
   }
   handleCreditCardInput(event) {
     let creditCard = this.state.creditCard;
     creditCard = event.target.value;
-    this.setState({ creditCard });
+    if(creditCard.length === 16) {
+      this.setState({
+        creditCard,
+        creditCardValidation: 'fas fa-check greenIcon'
+      });
+    } else {
+        this.setState({
+          creditCard,
+          creditCardValidation: 'fas fa-times redIcon'
+        });
+    }
   }
   handleShippingAddressInput(event) {
     let shippingAddress = this.state.shippingAddress;
     shippingAddress = event.target.value;
-    this.setState({ shippingAddress });
+    if(shippingAddress) {
+      this.setState({ 
+        shippingAddress,
+        shippingAddressValidation: 'fas fa-check greenIcon'
+       });
+    } else {
+      this.setState({ 
+        shippingAddress,
+        shippingAddressValidation: 'fas fa-times redIcon'
+       })
+    }
   }
   handlePlaceOrder(event) {
     event.preventDefault();
     this.props.onSubmit(this.state);
     this.setState({
       name: '',
+      nameValidation: '',
       creditCard: '',
-      shippingAddress: ''
+      creditCardValidation: '',
+      shippingAddress: '',
+      shippingAddressValidation: ''
     });
   }
   sendBackToCatalog() {
@@ -62,17 +98,17 @@ class CheckoutForm extends React.Component {
         <br />
         <div>
           <div className='mb-3' >
-            Name
+            Name <i className={this.state.nameValidation} ></i>
             <br />
-            <input value={this.state.name} onChange={this.handleNameInput} type="text" placeholder='Name' className='form-control' />
+            <input value={this.state.name} onChange={this.handleNameInput} type="text" placeholder='Full Name' className='form-control' />
           </div>
           <div className='mb-3' >
-            Credit Card
+            Credit Card <i className={this.state.creditCardValidation}></i>
             <br />
-            <input value={this.state.creditCard} onChange={this.handleCreditCardInput} type="text" placeholder='Credit Card #' className='form-control' />
+            <input value={this.state.creditCard} onChange={this.handleCreditCardInput} type="number" placeholder='16 Digit Credit Card #' className='form-control' />
           </div>
           <div className='mb-3' >
-            Shipping Address
+            Shipping Address <i className={this.state.shippingAddressValidation}></i>
             <br />
             <textarea value={this.state.shippingAddress} onChange={this.handleShippingAddressInput} name="" id="" cols="30" rows="10" placeholder='Street Address, City, State, Zipcode' className='form-control'></textarea>
           </div>

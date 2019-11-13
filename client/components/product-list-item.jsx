@@ -21,7 +21,7 @@ class ProductListItem extends React.Component {
     const img = this.props.element.image;
     const priceStr = this.props.element.price.toString();
     return (
-      <div className='col-md-3'>
+      <div className='col-sm-6 col-md-4 col-lg-3'>
         <div className='productCard card mb-4 shadow-sm' onClick={this.sendViewStateObj}>
           <img src={img} alt={this.props.element.name} className='img-fluid p-3' />
           <div className='productCardBody card-body'>

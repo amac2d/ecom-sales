@@ -1,0 +1,23 @@
+.productDescription {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.productName {
+  font-size: 1.5rem;
+}
+.productDetailsName {
+  font-size: 2rem;
+}
+.productDetailsPrice {
+  font-size: 1.5rem;
+}
+.cartSummaryItemPrice {
+  font-size: .8rem;
+}
+.redIcon {
+  color: red;
+}
+.greenIcon {
+  color: green;;
+}

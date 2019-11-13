@@ -1,0 +1,4 @@
+node_modules/
+mysql_credentials.js
+main.js
+main.js.map
